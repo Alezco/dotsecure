@@ -1,22 +1,28 @@
 import logo from './logo.svg';
 import './App.css';
+import {useState} from "react";
+import Secured from "./components/Secured";
+import NotSecured from "./components/NotSecured";
+import Securing from "./components/Securing";
+import {securedStates} from "./states";
 
-function App() {
+const App = () => {
+  const [securedState, setSecuredState] = useState(securedStates.NOT_SECURED)
+
+  const getCurrentState = (currentState) => {
+    const states = [
+      <NotSecured setSecuredState={setSecuredState} />,
+      <Securing setSecuredState={setSecuredState} />,
+      <Secured />
+    ]
+    return states[currentState];
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <img src={logo} className="App-logo" alt="logo"/>
+        {getCurrentState(securedState)}
       </header>
     </div>
   );
